@@ -1,10 +1,9 @@
 require "hello_fax/version"
-require "httmultiparty"
+require "httparty"
 
 module HelloFax
   class API
-
-    include ::HTTMultiParty
+    include ::HTTParty
 
     base_uri "https://api.hellofax.com/v1/"
     headers 'User-Agent' => "hello_fax gem #{VERSION}"
@@ -35,7 +34,7 @@ module HelloFax
     def transmission_details(transmission_guid)
       self.class.get("/Accounts/#{@guid}/Transmissions/#{transmission_guid}")
     end
-    
+
     def fax_lines
       self.class.get("/Accounts/#{@guid}/FaxLines")
     end
@@ -43,6 +42,5 @@ module HelloFax
     def find_fax_numbers(state_code)
       self.class.get('/AreaCodes', :query => { :StateCode => state_code })
     end
-
   end
 end
