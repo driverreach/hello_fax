@@ -16,7 +16,7 @@ module HelloFax
     end
 
     def send_fax(to, file)
-      self.class.post("/Accounts/#{@guid}/Transmissions", :query => { :To => to, :file => file })
+      self.class.post("/Accounts/#{@guid}/Transmissions", multipart: true, body: { To: to, file: file })
     end
 
     def account_details
@@ -24,7 +24,7 @@ module HelloFax
     end
 
     def update_account_details(options)
-      self.class.put("/Accounts/#{@guid}", :query => options)
+      self.class.put("/Accounts/#{@guid}", body: options)
     end
 
     def transmissions
@@ -40,7 +40,7 @@ module HelloFax
     end
 
     def find_fax_numbers(state_code)
-      self.class.get('/AreaCodes', :query => { :StateCode => state_code })
+      self.class.get('/AreaCodes', body: { StateCode: state_code })
     end
   end
 end
